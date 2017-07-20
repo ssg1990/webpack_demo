@@ -1,0 +1,126 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>drag</title>
+</head>
+
+<body>
+  <div id="rect"></div>
+  <div id="contextmenu">
+    <ul>
+      <li>list 1</li>
+      <li>list 2</li>
+      <li>list 3</li>
+      <li>list 4</li>
+    </ul>
+  </div>
+</body>
+
+<style>
+  *{
+    padding: 0px;
+    margin: 0px;
+  }
+  #rect{
+    position: absolute;
+    width: 10em;
+    height: 10em;
+    background: red;
+  }
+  #rect:hover{
+    cursor:hand;
+  }
+  .select{
+    border: black 2px dotted;
+  }
+  #contextmenu{
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+    width: 3em;
+  }
+  #contextmenu>ul{
+    list-style-type: none;
+  }
+  #contextmenu li{
+    background: linear-gradient(to right,green,yellow);
+    height: 1em;
+    width: 3em;
+    padding: 5px 20px 5px 8px;
+    line-height: 1em;
+    border: 1px solid black;
+    border-top: none;
+  }
+  #contextmenu li:first-child{
+    border-top: 1px solid black;
+  }
+</style>
+<script>
+  //A flag tue while chosed
+  var targetChoose = false
+  var rect = document.getElementById('rect')
+  var body = document.getElementsByTagName('body')[0]
+  var contextmenu = document.querySelector('#contextmenu')
+
+  window.onload = function(){
+    bindEvent()  
+  }
+
+  EventTarget.prototype.bind = function (eType, fn) {
+    if(document.addEventListener){
+      this.addEventListener(eType, fn)
+    }
+    else {
+      this.attachEvent(eType,fn)
+    }
+  }
+
+  function bindEvent(){
+    //choose rect
+    rect.bind('mousedown',function(e){
+      targetChoose = true
+      rect.classList.add('select')
+    })
+
+    body.bind('mousemove',function(e){
+      if(targetChoose === true){
+        // focus the rect in center
+        var corX = e.clientX - rect.clientWidth/2
+        var corY = e.clientY - rect.clientHeight/2
+        var translateStr = 'translate(' + corX + 'px,' + corY + 'px)'
+        rect.style.transform = translateStr
+      }
+    })
+    
+    //release the rect while mouse up
+    body.bind('mouseup', function(){
+      targetChoose = false
+      rect.classList.remove('select')
+    })
+
+    body.bind('contextmenu', function(e){
+      e.preventDefault()
+      var moveStr = 'translate(' + e.layerX + 'px,' 
+      + e.layerY + 'px)'
+      contextmenu.style.transform = moveStr
+      tollFunction.ctxShow()
+    })
+
+    body.bind('mousedown', function(e){
+      tollFunction.ctxHide()
+    })
+  }
+ 
+  var tollFunction = {
+    ctxShow () {
+      contextmenu.style.display = 'block'
+    },
+    ctxHide () {
+      contextmenu.style.display = "none"
+    }
+  }
+</script>
+</html>

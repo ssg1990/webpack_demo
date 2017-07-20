@@ -1,0 +1,52 @@
+<html>
+<head>
+	<meta charset="UTF-8">
+	<script src="http://code.jquery.com/jquery-latest.js"></script>
+	<script src="jquery.scrollstop.js"></script>
+	<title>Document</title>
+</head>
+<body>
+	<div id="panel">
+		<div id='content'><button>scroll</button></div>
+	</div>
+</body>
+<style>
+	#panel{
+		margin:0 auto 0 auto;
+		margin-top:5%;
+		display: block;
+		height:70%;
+		width:60%;
+		border:1px solid black;
+		overflow: scroll;
+	}
+	#content{
+		width:100%;
+		height:1000px;
+		display: block;
+	}
+	button{
+		position: relative;
+		top:10px;
+		left:200px;
+		width:50px;
+		height:30px;
+	}
+</style>
+<script>
+	// $('#content').bind('click',function(){
+	// 	let target = document.getElementById('panel')
+	// 	let initX = target.scrollX
+	// 	let initY = target.scrollY
+	// 	target.scrollTo(100,200)
+	// 	alert(`(${initX},${initX}):(${target.scrollX},${target.scrollY})`);
+
+	// })
+	// $('button').click(function(){
+	// 	$('#panel').scroll()
+	// 	console.log('btn click')
+	// 	}
+	// )
+	$('#panel').scroll(()=>console.log('scroll'))
+	</script>
+</html>
